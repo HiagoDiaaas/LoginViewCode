@@ -1,6 +1,18 @@
 import UIKit
 
+
+protocol LoginScreenProtocol:AnyObject{
+    func actionLoginButton()
+    
+}
+
 class LoginScreen: UIView {
+    
+    weak var delegate:LoginScreenProtocol?
+    
+    func delegate(delegate: LoginScreenProtocol?) {
+        self.delegate = delegate
+    }
     
     lazy var loginLabel:UILabel = {
         let label = UILabel()
@@ -56,6 +68,7 @@ class LoginScreen: UIView {
         button.clipsToBounds = true
         button.layer.cornerRadius = 7.5
         button.backgroundColor = .white
+        button.addTarget(self, action: #selector(self.loginButtonTapped), for: .touchUpInside)
         
         
         
@@ -102,6 +115,15 @@ class LoginScreen: UIView {
         self.addSubview(self.passwordTextField)
         self.addSubview(self.loginButton)
         
+    }
+    
+    public func configTextFieldDelegate(delegate: UITextFieldDelegate) {
+        self.emailTextField.delegate = delegate
+        self.passwordTextField.delegate = delegate
+    }
+    
+    @objc private func loginButtonTapped() {
+        self.delegate?.actionLoginButton()
     }
     
     required init?(coder: NSCoder) {

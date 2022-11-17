@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loginScreen?.delegate(delegate: self)
+        self.loginScreen?.configTextFieldDelegate(delegate: self)
+        
         self.view.backgroundColor = .black
         overrideUserInterfaceStyle = .dark
     }
@@ -25,5 +28,22 @@ class ViewController: UIViewController {
     
 
 
+}
+
+extension ViewController:UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
+    
+    
+}
+
+extension ViewController:LoginScreenProtocol {
+    func actionLoginButton() {
+        print("Login Button Tapped")
+    }
+    
+    
 }
 
